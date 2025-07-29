@@ -8,9 +8,9 @@ import { GlobalExceptionFilter } from '@/utils/global-exception.filter';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const config = app.get(ConfigService);
-  
+
   app.use(I18nMiddleware);
-  
+
   // Configure global validation with i18n support
   app.useGlobalPipes(
     new I18nValidationPipe({
@@ -18,7 +18,7 @@ async function bootstrap() {
       forbidNonWhitelisted: true,
       transform: true,
       disableErrorMessages: false,
-    })
+    }),
   );
 
   // Configure global exception filters
@@ -30,4 +30,5 @@ async function bootstrap() {
   const port = config.getOrThrow<number>('APP_PORT');
   await app.listen(port);
 }
+
 bootstrap();
