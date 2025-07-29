@@ -15,10 +15,10 @@ Create a `.env` file in the root directory with the following variables:
 ```env
 # Database Configuration
 DB_HOST=localhost
-DB_PORT=3306
-DB_USERNAME=root
-DB_PASSWORD=your_password
-DB_DATABASE=nestjs_db
+DB_PORT=3317
+DB_DATABASE=nestjs_core
+DB_USERNAME=nestjs_core_user
+DB_PASSWORD=secret
 
 # Application Configuration
 NODE_ENV=development
