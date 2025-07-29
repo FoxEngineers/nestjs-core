@@ -1,0 +1,168 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# 📦 Backend Rules – (NestJS). Code must be modular, clean, testable, and production-ready.
+
+## 🛡️ Stack
+
+* NestJS with UUIDs (TypeORM or Prisma)
+* Passport for authentication
+* MySQL database
+* RESTful API (`/api/*`)
+
+## 🗂 Structure
+
+* Feature-based module layout
+* Controllers in `src/modules/*/controllers`
+* Services in `src/modules/*/services`
+* Entities (models) in `src/modules/*/entities`
+* DTOs in `src/modules/*/dto`
+* Guards and middleware in `src/guards`, `src/middleware`, `src/utils`
+* Helpers in `src/utils`
+
+## ⚙️ Helper Functions
+
+* Create shared helper functions in `src/utils`
+* Export utility methods like `formatMoney()`, `generateUUID()`, etc.
+
+## 📦 Package Installation Notes
+
+* Always install packages with exact version:
+
+  ```bash
+  npm i <package>@<version> --save-exact
+  ```
+
+  Example:
+
+  ```bash
+  npm i @nestjs/config@3.1.0 --save-exact
+  ```
+
+## 🌍 Auth
+* Docs: [NestJS Authentication Passport](https://docs.nestjs.com/recipes/passport)
+* Passport login (`/api/auth/*`)
+* Role-based auth with `user` and `admin`
+* Guards using `@Roles()` and `@UseGuards(RoleGuard)`
+* Enable authentication globally
+
+## 🧹 Conventions
+
+* Use UUIDs for primary keys (TypeORM `@PrimaryGeneratedColumn('uuid')`)
+* Enable soft delete using `@DeleteDateColumn`
+* Global interceptor for consistent API response format
+* All business logic lives in `services`, controllers are thin
+* Use environment variables via `@nestjs/config`
+
+## 🚗 Logging (Local + Slack)
+
+* Logging with a Global Exception Filter
+* Use custom `Logger` class in `src/utils/logger.ts`
+* Supports `log`, `warn`, `error`, `debug` methods
+* Switches automatically based on environment:
+
+  * In `development`, logs to console
+  * In `production` with `ENABLE_SLACK_LOG=true`, logs also go to Slack via webhook
+
+Environment setup:
+
+```env
+NODE_ENV=development
+ENABLE_SLACK_LOG=true
+SLACK_WEBHOOK_URL=https://hooks.slack.com/services/...
+```
+
+Sample usage:
+
+```ts
+const logger = new Logger('AppService');
+logger.warn('Credit limit nearly reached');
+```
+
+## 😀 Best Practices
+
+* Controllers: only validate and route
+* Services: contain all business logic
+* Services are injected via constructor and scoped per module
+* Apply global exception filters and validation pipes
+
+## 🌐 Localisation
+
+* English (`en`) is default language
+* For English: use Britlish English
+* Use i18n module
+* Language fallback enabled (`fallbackLanguage: 'en'`)
+* Wrap user-facing strings with `i18n.t("...")` or translation pipes
+* Translation files stored in `src/i18n/en/`
+
+## 🇬🇧 British English Guidelines
+
+* Use British English spelling and grammar** in all code, comments, documentation, and user-facing text.
+  - For example: “authorise”, “optimise”, “organise”, “colour”, “favour”, “initialise”, “authorisation”, etc.
+* Use British English in all test case descriptions and assertions.
+* Avoid Americanisms such as “organize”, “authorize”, “initialize”, etc.
+
+## 🥪 Testing
+
+* Use [Jest](https://jestjs.io/) for unit and e2e tests
+* Test files: `*.spec.ts`
+* Structure:
+
+  * `src/modules/*/__tests__/*.spec.ts`
+  * `src/common/__tests__/*.spec.ts`
+* Faker used for seeding mock data
+* Use UUIDs in fixtures
+
+## 🧼 Formatting
+
+* Use [Prettier](https://prettier.io/) and [ESLint](https://eslint.org/)
+
+## 🔧 Migration Policy
+
+* Always add a migration file when updating the database
+
+## 📎 Import Path Aliases
+
+* Use `@/` for internal imports (alias for `src/`)
+* Avoid relative imports like `../../../services/...`
+* Example usage:
+
+```ts
+import { Logger } from '@/utils/logger';
+import { AuthService } from '@/modules/auth/services/auth.service';
+```
+
+* Configured in `tsconfig.json`:
+
+```json
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
+  }
+}
+```
+
+## Best Practice Import Rule:
+* **Same directory** → Use `./` relative imports ✅
+* **Cross directory** → Use `@/` alias imports ✅  
+* **CLI files** → Use relative paths ✅
+
+```ts
+// ✅ Entity files (same directory)
+import { User } from './user.entity';
+
+// ✅ App module (cross-directory)  
+import { getDatabaseConfig } from '@/config/database.config';
+
+// ✅ CLI file (root directory)
+import { getDatabaseConfig } from './src/config/database.config';
+```
+
+## Send mail
+* Use handlebars to render html and i18n ([hbs]https://www.npmjs.com/package/handlebars)
+* Template folder: `src/templates/email`

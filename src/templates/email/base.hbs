@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="{{lang}}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{title}}</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      background-color: #ffffff;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 30px;
+      text-align: center;
+    }
+    .header h1 {
+      margin: 0;
+      font-size: 28px;
+      font-weight: 300;
+    }
+    .content {
+      padding: 40px 30px;
+    }
+    .content h2 {
+      color: #333;
+      margin-top: 0;
+      font-size: 24px;
+    }
+    .content p {
+      margin-bottom: 20px;
+      font-size: 16px;
+    }
+    .button-container {
+      text-align: center;
+      margin: 30px 0;
+    }
+    .button {
+      display: inline-block;
+      padding: 15px 30px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: bold;
+      font-size: 16px;
+      transition: transform 0.2s;
+    }
+    .button:hover {
+      transform: translateY(-2px);
+    }
+    .footer {
+      background-color: #f8f9fa;
+      padding: 20px 30px;
+      text-align: center;
+      border-top: 1px solid #e9ecef;
+    }
+    .footer p {
+      margin: 0;
+      font-size: 14px;
+      color: #6c757d;
+    }
+    .brand {
+      color: #667eea;
+      font-weight: bold;
+    }
+    .info-box {
+      background-color: #e3f2fd;
+      padding: 15px;
+      border-radius: 5px;
+      margin: 20px 0;
+    }
+    .info-box p {
+      margin: 0;
+      font-size: 14px;
+      color: #1976d2;
+    }
+    .order-details {
+      background-color: #f8f9fa;
+      padding: 20px;
+      border-radius: 8px;
+      margin: 25px 0;
+      border: 1px solid #dee2e6;
+    }
+    .order-details h3 {
+      margin-top: 0;
+      color: #495057;
+    }
+    .order-details table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .order-details td {
+      padding: 8px 0;
+    }
+    .order-details td:first-child {
+      font-weight: bold;
+      color: #495057;
+    }
+    .order-details td:last-child {
+      color: #6c757d;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1><span class="brand">AutoFillForm</span></h1>
+    </div>
+    <div class="content">
+      <h2>{{title}}</h2>
+      {{{content}}}
+      {{#if buttonText}}
+        <div class="button-container">
+          <a href="{{buttonUrl}}" class="button">{{buttonText}}</a>
+        </div>
+      {{/if}}
+    </div>
+    <div class="footer">
+      <p>
+        {{#if footerText}}{{footerText}}{{else}}{{defaultFooterText}}{{/if}}
+        <br>
+        <small>© {{currentYear}} AutoFillForm. {{rightsReserved}}</small>
+      </p>
+    </div>
+  </div>
+</body>
+</html> 
