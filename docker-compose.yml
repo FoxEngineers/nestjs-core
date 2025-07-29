@@ -11,9 +11,9 @@ services:
             MYSQL_PASSWORD: '${DB_PASSWORD}'
             MYSQL_ALLOW_EMPTY_PASSWORD: 1
         volumes:
-            - 'autoform-mysql:/var/lib/mysql'
+            - 'nestjs-core-mysql:/var/lib/mysql'
         networks:
-            - autoform
+            - nestjs-core
         healthcheck:
             test:
                 - CMD
@@ -28,11 +28,11 @@ services:
             - '${FORWARD_MAILPIT_PORT:-1025}:1025'
             - '${FORWARD_MAILPIT_DASHBOARD_PORT:-8025}:8025'
         networks:
-            - autoform
+            - nestjs-core
 
 volumes:
-    autoform-mysql:
+    nestjs-core-mysql:
         driver: local
 networks:
-    autoform:
+    nestjs-core:
         driver: bridge
